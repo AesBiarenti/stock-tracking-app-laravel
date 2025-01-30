@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,8 @@ class UserController extends Controller
             'password' => 'required|string',
         ]);
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return view('stock.stock')->with('success', 'Giriş başarılı.');
+            $products = Product::all();
+            return view('stock.stock',compact('products'))->with('success', 'Giriş başarılı.');
         }
         return back()->with('error', 'E-posta veya şifre yanlış.');
     }   
