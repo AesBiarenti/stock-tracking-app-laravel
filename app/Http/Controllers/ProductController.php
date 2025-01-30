@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
     public function index(){
-        $products = Product::with('category','user')->get();
+        $userId = Auth::id();
+        // $products = Product::with('category','user')->get();
+        $products = Product::where('user_id',$userId)->get();
         return view('stock.stock',compact('products'));
     }
     public function create()
@@ -45,7 +47,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('products.edit', compact('product'));
+        return view('stock.edit-product', compact('product'));
     }
 
     /**
